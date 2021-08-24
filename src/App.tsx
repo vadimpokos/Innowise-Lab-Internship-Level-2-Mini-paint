@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { useRef } from 'react'
 import './App.css'
 
-const TOOLS = ['Pencil', 'Rectangle', 'Circle']
+const TOOLS = ['Pencil', 'Rectangle', 'Circle', 'Line']
 
 function App(): JSX.Element {
     const canvasRef = useRef(null)
@@ -15,7 +15,7 @@ function App(): JSX.Element {
     const [images, setImages] = useState([])
     const [startX, setStartX] = useState(0)
     const [startY, setStartY] = useState(0)
-    const [selectedTool, setSelectedTool] = useState(TOOLS[1])
+    const [selectedTool, setSelectedTool] = useState(TOOLS[0])
 
     useEffect(() => {
         const canvas = canvasRef.current
@@ -23,6 +23,9 @@ function App(): JSX.Element {
         canvas.height = window.innerHeight
         const context = canvas.getContext('2d')
         contextRef.current = context
+        context.lineCap = 'round'
+        context.lineWidth = 3
+        context.strokeStyle = '#999'
 
         const secondCanvas = secondCanvasRef.current
         secondCanvas.width = window.innerWidth
@@ -62,6 +65,7 @@ function App(): JSX.Element {
         const { x, y } = nativeEvent
         contextRef.current.beginPath()
         contextRef.current.moveTo(x, y)
+
         setIsDrawing(true)
         setStartX(x)
         setStartY(y)
@@ -87,8 +91,12 @@ function App(): JSX.Element {
             canvasRef.current.width,
             canvasRef.current.height
         )
-
         switch (selectedTool) {
+            case 'Line':
+                contextRef.current.beginPath()
+                contextRef.current.moveTo(startX, startY)
+                contextRef.current.lineTo(x, y)
+                break
             case 'Circle':
                 const getRaduis = (): number => {
                     return Math.sqrt(
@@ -96,6 +104,7 @@ function App(): JSX.Element {
                     )
                 }
 
+                contextRef.current.beginPath()
                 contextRef.current.arc(
                     startX,
                     startY,
@@ -104,24 +113,23 @@ function App(): JSX.Element {
                     Math.PI * 2,
                     true
                 )
-                contextRef.current.stroke()
-
                 break
             case 'Pencil':
                 contextRef.current.lineTo(x, y)
-                contextRef.current.stroke()
                 break
             case 'Rectangle':
-                contextRef.current.strokeRect(
-                    startX,
-                    startY,
-                    x - startX,
-                    y - startY
-                )
+                const x0 = Math.min(x, startX),
+                    y0 = Math.min(y, startY),
+                    w = Math.abs(x - startX),
+                    h = Math.abs(y - startY)
+
+                contextRef.current.strokeRect(x0, y0, w, h)
                 break
             default:
                 break
         }
+
+        contextRef.current.stroke()
     }
 
     const save = (): void => {
