@@ -1,2 +1,6 @@
 export const GET_DATA = 'DATA/GET_DATA'
 export const ADD_DATA = 'DATA/ADD_DATA'
+export const DELETE_DATA = 'DATA/DELETE_DATA'
+export const GOOGLE_SIGN_IN = 'USER/GOOGLE_SIGN_IN'
+export const LOGOUT = 'USER/LOGOUT'
+export const CLEAR_DATA = 'DATA/CLEAR_DATA'

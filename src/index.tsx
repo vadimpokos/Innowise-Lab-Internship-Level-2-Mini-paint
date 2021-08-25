@@ -11,7 +11,4 @@ const app = (
     </Provider>
 )
 
-ReactDOM.render(
-    <React.StrictMode>{app}</React.StrictMode>,
-    document.getElementById('root')
-)
+ReactDOM.render(app, document.getElementById('root'))
