@@ -40,7 +40,11 @@ export const Paint = (): JSX.Element => {
         const secondContext = secondCanvas.getContext('2d')
         secondContextRef.current = secondContext
 
-        setDeltaY(document.getElementById('tools').clientHeight + 10)
+        setDeltaY(
+            document.getElementById('tools').clientHeight +
+                document.getElementById('logout-button').clientHeight +
+                14
+        )
     }, [])
 
     const deltaX = (): number => {

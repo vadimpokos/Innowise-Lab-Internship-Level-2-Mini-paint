@@ -21,6 +21,7 @@ export const Main = (): JSX.Element => {
     return (
         <>
             <Button
+                id="logout-button"
                 onClick={() => {
                     dispatch(logOut())
                     dispatch(clearImagesList())
