@@ -7,9 +7,11 @@ export const Auth = (): JSX.Element => {
     const dispatch = useDispatch()
 
     return (
-        <>
-            <h1>Sign In with Google</h1>
-            <Button onClick={() => dispatch(googleSignIn())}>Auth</Button>
-        </>
+        <div className="auth-wrapper">
+            <div className="auth-container">
+                <h1>Sign In with Google</h1>
+                <Button onClick={() => dispatch(googleSignIn())}>Auth</Button>
+            </div>
+        </div>
     )
 }

@@ -4,9 +4,10 @@ import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useRef } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import './App.css'
 import { addImage, getImages } from './redux/actions'
+import { RootState } from './redux/rootReducer'
 
 const TOOLS = ['Pencil', 'Rectangle', 'Circle', 'Line']
 
@@ -23,6 +24,8 @@ export const Paint = (): JSX.Element => {
     const [color, setColor] = useState('#776e6e')
 
     const [deltaY, setDeltaY] = useState(0)
+
+    const user = useSelector((state: RootState) => state.user.user)
 
     const dispatch = useDispatch()
 
@@ -42,13 +45,13 @@ export const Paint = (): JSX.Element => {
 
         setDeltaY(
             document.getElementById('tools').clientHeight +
-                document.getElementById('logout-button').clientHeight +
+                document.getElementById('page-header').clientHeight +
                 14
         )
     }, [])
 
     const deltaX = (): number => {
-        return (window.innerWidth - canvasRef.current.width) / 2 - 10
+        return (window.innerWidth - canvasRef.current.width) / 2
     }
 
     const updateImg = (): void => {
@@ -138,7 +141,14 @@ export const Paint = (): JSX.Element => {
     }
 
     const save = (): void => {
-        dispatch(addImage(secondCanvasRef.current.toDataURL()))
+        dispatch(
+            addImage(
+                secondCanvasRef.current.toDataURL(),
+                user.uid,
+                user.displayName,
+                user.photoURL
+            )
+        )
         dispatch(getImages())
     }
 

@@ -13,7 +13,10 @@ export const getImages = (): any => {
     return async (
         dispatch: (arg0: { type: string; payload: any[] }) => void
     ) => {
-        const response = db.collection('images').orderBy('id')
+        const response = db
+            .collection('images')
+            // .where('uid', '==', uid)
+            .orderBy('id')
         let images: any[] = []
         try {
             await response
@@ -38,27 +41,40 @@ export const getImages = (): any => {
     }
 }
 
-export const addImage = (img: string): any => {
+export const addImage = (
+    img: string,
+    uid: string,
+    username: string,
+    avatar: string
+): any => {
     return async (
         dispatch: (arg0: {
             type: string
-            payload: { base64: string; id: number }
+            payload: {
+                base64: string
+                id: number
+                uid: string
+                username: string
+                avatar: string
+            }
         }) => void
     ) => {
         const response = db.collection('images')
         const image = {
             base64: img,
             id: new Date().getTime(),
+            uid: uid,
+            username: username,
+            avatar: avatar,
         }
         try {
             await response
                 .add(image)
-                .then((docRef) => {
+                .then(() => {
                     dispatch({
                         type: ADD_DATA,
                         payload: { ...image },
                     })
-                    console.log(docRef.id)
                 })
                 .catch((error) => {
                     throw error
