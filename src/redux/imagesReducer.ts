@@ -9,7 +9,7 @@ type init = { images: image[] }
 
 type action = {
     type: string
-    payload: unknown
+    payload: never
 }
 
 const initialState: init = {

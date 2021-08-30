@@ -24,3 +24,5 @@ store.subscribe(() => {
         user: store.getState().user,
     })
 })
+
+export type AppDispatch = typeof store.dispatch

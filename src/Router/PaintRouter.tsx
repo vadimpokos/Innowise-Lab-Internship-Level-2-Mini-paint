@@ -7,8 +7,8 @@ import {
     Redirect,
 } from 'react-router-dom'
 import { AppRouter } from './AppRouter'
-import { Auth } from './auth'
-import { RootState } from './redux/rootReducer'
+import { Auth } from '../auth'
+import { RootState } from '../redux/rootReducer'
 import { PATH_ROUTES } from './RoutePaths'
 
 export const PaintRouter = (): JSX.Element => {

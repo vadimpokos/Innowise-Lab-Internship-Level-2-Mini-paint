@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.css'
 import 'antd/dist/antd.css'
-import { PaintRouter } from './PaintRouter'
+import { PaintRouter } from './Router/PaintRouter'
 
 function App(): JSX.Element {
     return <PaintRouter />

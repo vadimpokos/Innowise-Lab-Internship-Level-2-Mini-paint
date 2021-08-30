@@ -8,16 +8,29 @@ import {
     GOOGLE_SIGN_IN,
     LOGOUT,
 } from './reduxTypes'
+import { Dispatch } from 'redux'
+import { openNotification } from '../notification'
 
-export const getImages = (): any => {
+export interface Iimage {
+    avatar?: string
+    base64?: string
+    id?: string
+    uid?: string
+    username?: string
+}
+
+export interface IdbImage extends Iimage {
+    firestoreId: string
+}
+
+export const getImages = (): ((
+    dispatch: Dispatch<{ type: string; payload: IdbImage[] }>
+) => Promise<void>) => {
     return async (
-        dispatch: (arg0: { type: string; payload: any[] }) => void
-    ) => {
-        const response = db
-            .collection('images')
-            // .where('uid', '==', uid)
-            .orderBy('id')
-        let images: any[] = []
+        dispatch: Dispatch<{ type: string; payload: IdbImage[] }>
+    ): Promise<void> => {
+        const response = db.collection('images').orderBy('id')
+        let images: IdbImage[] = []
         try {
             await response
                 .get()
@@ -36,7 +49,7 @@ export const getImages = (): any => {
                     throw e
                 })
         } catch (e) {
-            console.log(e)
+            openNotification(e.name, e.message)
         }
     }
 }
@@ -46,23 +59,16 @@ export const addImage = (
     uid: string,
     username: string,
     avatar: string
-): any => {
+): ((
+    dispatch: Dispatch<{ type: string; payload: Iimage }>
+) => Promise<void>) => {
     return async (
-        dispatch: (arg0: {
-            type: string
-            payload: {
-                base64: string
-                id: number
-                uid: string
-                username: string
-                avatar: string
-            }
-        }) => void
-    ) => {
+        dispatch: Dispatch<{ type: string; payload: Iimage }>
+    ): Promise<void> => {
         const response = db.collection('images')
         const image = {
             base64: img,
-            id: new Date().getTime(),
+            id: `${new Date().getTime()}`,
             uid: uid,
             username: username,
             avatar: avatar,
@@ -80,13 +86,20 @@ export const addImage = (
                     throw error
                 })
         } catch (e) {
-            console.log('error', 'Error adding document', e.message)
+            openNotification(e.name, e.message)
         }
     }
 }
 
-export const deleteImage = (docId: string, id: string): any => {
-    return async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const deleteImage = (
+    docId: string,
+    id: string
+): ((
+    dispatch: Dispatch<{ type: string; payload: string }>
+) => Promise<void>) => {
+    return async (
+        dispatch: Dispatch<{ type: string; payload: string }>
+    ): Promise<void> => {
         const response = db.collection('images')
         try {
             await response
@@ -102,15 +115,17 @@ export const deleteImage = (docId: string, id: string): any => {
                     throw error
                 })
         } catch (e) {
-            console.log(e)
+            openNotification(e.name, e.message)
         }
     }
 }
 
-export const googleSignIn = (): any => {
+export const googleSignIn = (): ((
+    dispatch: Dispatch<{ type: string; payload: firebase.User }>
+) => Promise<void>) => {
     return async (
-        dispatch: (arg0: { type: string; payload: firebase.User }) => void
-    ) => {
+        dispatch: Dispatch<{ type: string; payload: firebase.User }>
+    ): Promise<void> => {
         const provider = new firebase.auth.GoogleAuthProvider()
 
         await firebase
@@ -120,14 +135,18 @@ export const googleSignIn = (): any => {
                 const user = result.user
                 dispatch({ type: GOOGLE_SIGN_IN, payload: user })
             })
-            .catch((error) => {
-                console.log('error', 'Login error', error.message)
+            .catch((e) => {
+                openNotification(e.name, e.message)
             })
     }
 }
 
-export const logOut = (): any => {
-    return async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const logOut = (): ((
+    dispatch: Dispatch<{ type: string; payload: Record<string, never> }>
+) => Promise<void>) => {
+    return async (
+        dispatch: Dispatch<{ type: string; payload: Record<string, never> }>
+    ): Promise<void> => {
         try {
             await firebase
                 .auth()
@@ -139,12 +158,12 @@ export const logOut = (): any => {
                     throw error
                 })
         } catch (e) {
-            console.log('error', 'LogOut error', e.message)
+            openNotification(e.name, e.message)
         }
     }
 }
 
-export const clearImagesList = (): any => {
+export const clearImagesList = (): { type: string; payload: [] } => {
     return {
         type: CLEAR_DATA,
         payload: [],

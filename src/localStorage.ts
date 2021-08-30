@@ -10,7 +10,7 @@ export const loadState = (): any => {
     }
 }
 
-export const saveState = (state: any): any => {
+export const saveState = (state: { user: string }): void => {
     try {
         const serializedState = JSON.stringify(state)
         localStorage.setItem('state', serializedState)

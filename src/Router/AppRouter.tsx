@@ -1,12 +1,11 @@
 import { Button, Menu } from 'antd'
-
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Route, useRouteMatch } from 'react-router'
 import { Link } from 'react-router-dom'
-import { Feed } from './Feed'
-import { Main } from './Main'
-import { clearImagesList, logOut } from './redux/actions'
+import { Feed } from '../Feed'
+import { Paint } from '../Paint'
+import { clearImagesList, logOut } from '../redux/actions'
 
 export const AppRouter = (): JSX.Element => {
     const { path } = useRouteMatch()
@@ -40,7 +39,7 @@ export const AppRouter = (): JSX.Element => {
                 </Menu.Item>
             </Menu>
             <Route exact path={path} component={Feed} />
-            <Route path={`${path}/paint`} component={Main} />
+            <Route path={`${path}/paint`} component={Paint} />
         </>
     )
 }
