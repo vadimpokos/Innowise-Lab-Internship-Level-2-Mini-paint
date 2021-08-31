@@ -25,9 +25,7 @@
   "scripts": {
     "lint:fix": "eslint './src/**/*.{ts,tsx}'",
     "start": "env-cmd -f .env.firebase react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "env-cmd -f .env.firebase react-scripts build"
   },
   "eslintConfig": {
     "extends": [
