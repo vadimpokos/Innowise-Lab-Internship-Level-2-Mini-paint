@@ -1,4 +1,7 @@
-export const loadState = (): any => {
+import { RootState } from './redux/rootReducer'
+import { User } from './redux/userReducer'
+
+export const loadState = (): RootState => {
     try {
         const serializedState = localStorage.getItem('state')
         if (serializedState === null) {
@@ -10,7 +13,7 @@ export const loadState = (): any => {
     }
 }
 
-export const saveState = (state: { user: string }): void => {
+export const saveState = (state: { user: User }): void => {
     try {
         const serializedState = JSON.stringify(state)
         localStorage.setItem('state', serializedState)

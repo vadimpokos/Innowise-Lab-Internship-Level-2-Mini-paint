@@ -4,12 +4,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ImageItem } from './ImageItem'
 import { getImages, Iimage } from './redux/actions'
 import { RootState } from './redux/rootReducer'
-import { AppDispatch } from './redux/store'
 
 export const Feed = (): JSX.Element => {
     const images = useSelector((state: RootState) => state.images.images)
     const user = useSelector((state: RootState) => state.user.user)
-    const dispatch = useDispatch<AppDispatch>()
+    const dispatch = useDispatch()
     const [selectedUser, setSelectedUser] = useState('All')
 
     useEffect(() => {

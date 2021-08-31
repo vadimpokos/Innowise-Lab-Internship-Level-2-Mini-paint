@@ -10,6 +10,7 @@ import {
 } from './reduxTypes'
 import { Dispatch } from 'redux'
 import { openNotification } from '../notification'
+import { image } from './imagesReducer'
 
 export interface Iimage {
     avatar?: string
@@ -66,7 +67,7 @@ export const addImage = (
         dispatch: Dispatch<{ type: string; payload: Iimage }>
     ): Promise<void> => {
         const response = db.collection('images')
-        const image = {
+        const imageForDB = {
             base64: img,
             id: `${new Date().getTime()}`,
             uid: uid,
@@ -75,11 +76,11 @@ export const addImage = (
         }
         try {
             await response
-                .add(image)
+                .add(imageForDB)
                 .then(() => {
                     dispatch({
                         type: ADD_DATA,
-                        payload: { ...image },
+                        payload: { ...imageForDB },
                     })
                 })
                 .catch((error) => {
@@ -92,24 +93,23 @@ export const addImage = (
 }
 
 export const deleteImage = (
-    docId: string,
-    id: string
+    img: image
 ): ((
-    dispatch: Dispatch<{ type: string; payload: string }>
+    dispatch: Dispatch<{ type: string; payload: image[] }>
 ) => Promise<void>) => {
     return async (
-        dispatch: Dispatch<{ type: string; payload: string }>
+        dispatch: Dispatch<{ type: string; payload: image[] }>
     ): Promise<void> => {
         const response = db.collection('images')
         try {
             await response
-                .doc(docId)
+                .doc(img.firestoreId)
                 .delete()
                 .then(() => {
                     console.log('success', 'Image deleted!')
                 })
                 .then(() => {
-                    dispatch({ type: DELETE_DATA, payload: id })
+                    dispatch({ type: DELETE_DATA, payload: [img] })
                 })
                 .catch((error) => {
                     throw error

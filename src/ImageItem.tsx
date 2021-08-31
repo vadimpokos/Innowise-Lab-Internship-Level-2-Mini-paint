@@ -25,9 +25,7 @@ export const ImageItem = (item: {
                 user.uid === item.uid ? (
                     <DeleteOutlined
                         key={item.id}
-                        onClick={() =>
-                            dispatch(deleteImage(item.firestoreId, item.id))
-                        }
+                        onClick={() => dispatch(deleteImage(item))}
                     />
                 ) : null,
             ]}
