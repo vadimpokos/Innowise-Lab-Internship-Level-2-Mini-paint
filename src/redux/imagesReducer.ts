@@ -35,12 +35,12 @@ export const imagesReducer = (state = initialState, action: action): State => {
                     ...state.images.slice(
                         0,
                         state.images.findIndex(
-                            (item) => item.id === action.payload[0].firestoreId
+                            (item) => item.id === action.payload[0].id
                         )
                     ),
                     ...state.images.slice(
                         state.images.findIndex(
-                            (item) => item.id === action.payload[0].firestoreId
+                            (item) => item.id === action.payload[0].id
                         ) + 1
                     ),
                 ],

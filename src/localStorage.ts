@@ -13,7 +13,7 @@ export const loadState = (): RootState => {
     }
 }
 
-export const saveState = (state: { user: User }): void => {
+export const saveState = (state: { user: { user: User } }): void => {
     try {
         const serializedState = JSON.stringify(state)
         localStorage.setItem('state', serializedState)
