@@ -2,6 +2,7 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://github.com/vadimpokos/Innowise-Lab-Internship-Level-2-Mini-paint.git",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
@@ -25,7 +26,9 @@
   "scripts": {
     "lint:fix": "eslint './src/**/*.{ts,tsx}'",
     "start": "env-cmd -f .env.firebase react-scripts start",
-    "build": "env-cmd -f .env.firebase react-scripts build"
+    "build": "env-cmd -f .env.firebase react-scripts build",
+    "predeploy": "env-cmd -f .env.firebase npm run build",
+    "deploy": "env-cmd -f .env.firebase gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -53,6 +56,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-react": "^1.1.7",
     "eslint-plugin-prettier": "^3.4.1",
+    "gh-pages": "^3.2.3",
     "husky": "^4.3.8",
     "lint-staged": "^11.1.2",
     "prettier": "^2.3.2"
