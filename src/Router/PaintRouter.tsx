@@ -1,11 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Redirect,
-} from 'react-router-dom'
+import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import { AppRouter } from './AppRouter'
 import { Auth } from '../auth'
 import { RootState } from '../redux/rootReducer'

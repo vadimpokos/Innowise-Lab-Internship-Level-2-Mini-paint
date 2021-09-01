@@ -1,5 +1,7 @@
 # Innowise Lab Internship Level 2 Mini Paint
 
+## [demo](https://vadimpokos.github.io/Innowise-Lab-Internship-Level-2-Mini-paint/)
+
 ## How to run the app
 
 1. Clone this repo
