@@ -3,14 +3,20 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Route, useRouteMatch } from 'react-router'
 import { Link } from 'react-router-dom'
-import { Feed } from '../Feed'
+import { Feed } from '../Feed/Feed'
 import { Paint } from '../Paint'
-import { clearImagesList, logOut } from '../redux/actions'
+import { logOut } from '../redux/userReducer/actions'
+import { clearImagesList } from '../redux/imagesReducer/actions'
 
 export const AppRouter = (): JSX.Element => {
     const { path } = useRouteMatch()
     const dispatch = useDispatch()
     const [currentMenuItem, setCurrentMenuItem] = useState('feed')
+
+    const handleLogOut = (): void => {
+        dispatch(logOut())
+        dispatch(clearImagesList())
+    }
 
     return (
         <>
@@ -27,13 +33,7 @@ export const AppRouter = (): JSX.Element => {
                     <Link to={path}>Feed</Link>
                 </Menu.Item>
                 <Menu.Item key="logout-button">
-                    <Button
-                        id="logout-button"
-                        onClick={() => {
-                            dispatch(logOut())
-                            dispatch(clearImagesList())
-                        }}
-                    >
+                    <Button id="logout-button" onClick={handleLogOut}>
                         Logout
                     </Button>
                 </Menu.Item>

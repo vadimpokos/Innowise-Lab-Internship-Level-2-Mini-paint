@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import { imagesReducer } from './imagesReducer'
-import { userReducer } from './userReducer'
+import { imagesReducer } from './imagesReducer/imagesReducer'
+import { userReducer } from './userReducer/userReducer'
 
 export const rootReducer = combineReducers({
     images: imagesReducer,

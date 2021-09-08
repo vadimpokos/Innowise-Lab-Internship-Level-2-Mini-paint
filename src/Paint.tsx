@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 import { useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import './App.css'
-import { addImage, getImages } from './redux/actions'
+import { addImage, getImages } from './redux/imagesReducer/actions'
 import { RootState } from './redux/rootReducer'
 
 const TOOLS = ['Pencil', 'Rectangle', 'Circle', 'Line']
@@ -23,35 +23,35 @@ export const Paint = (): JSX.Element => {
     const [lineWidth, setlineWidth] = useState(5)
     const [color, setColor] = useState('#776e6e')
 
-    const [deltaY, setDeltaY] = useState(0)
-
     const user = useSelector((state: RootState) => state.user.user)
 
     const dispatch = useDispatch()
 
     useEffect(() => {
         const canvas = canvasRef.current
-        canvas.width = parent.innerWidth * 0.8
-        canvas.height = parent.innerHeight * 0.8
+        canvas.width = document.getElementById('viewport').clientWidth
+        canvas.height = document.getElementById('viewport').clientHeight
         const context = canvas.getContext('2d')
         contextRef.current = context
         context.lineCap = 'round'
 
         const secondCanvas = secondCanvasRef.current
-        secondCanvas.width = parent.innerWidth * 0.8
-        secondCanvas.height = parent.innerHeight * 0.8
+        secondCanvas.width = document.getElementById('viewport').clientWidth
+        secondCanvas.height = document.getElementById('viewport').clientHeight
         const secondContext = secondCanvas.getContext('2d')
         secondContextRef.current = secondContext
-
-        setDeltaY(
-            document.getElementById('tools').clientHeight +
-                document.getElementById('page-header').clientHeight +
-                14
-        )
     }, [])
 
     const deltaX = (): number => {
         return (window.innerWidth - canvasRef.current.width) / 2
+    }
+
+    const deltaY = (): number => {
+        return (
+            document.getElementById('tools').clientHeight +
+            document.getElementById('page-header').clientHeight +
+            14
+        )
     }
 
     const updateImg = (): void => {
@@ -69,7 +69,7 @@ export const Paint = (): JSX.Element => {
     }: React.MouseEvent<HTMLCanvasElement>): void => {
         const { x, y } = nativeEvent
         contextRef.current.beginPath()
-        contextRef.current.moveTo(x - deltaX(), y - deltaY)
+        contextRef.current.moveTo(x - deltaX(), y - deltaY())
 
         setIsDrawing(true)
         setStartX(x)
@@ -102,8 +102,8 @@ export const Paint = (): JSX.Element => {
         switch (selectedTool) {
             case 'Line':
                 contextRef.current.beginPath()
-                contextRef.current.moveTo(startX - deltaX(), startY - deltaY)
-                contextRef.current.lineTo(x - deltaX(), y - deltaY)
+                contextRef.current.moveTo(startX - deltaX(), startY - deltaY())
+                contextRef.current.lineTo(x - deltaX(), y - deltaY())
                 break
             case 'Circle':
                 const getRaduis = (): number => {
@@ -115,7 +115,7 @@ export const Paint = (): JSX.Element => {
                 contextRef.current.beginPath()
                 contextRef.current.arc(
                     startX - deltaX(),
-                    startY - deltaY,
+                    startY - deltaY(),
                     getRaduis(),
                     0,
                     Math.PI * 2,
@@ -123,11 +123,11 @@ export const Paint = (): JSX.Element => {
                 )
                 break
             case 'Pencil':
-                contextRef.current.lineTo(x - deltaX(), y - deltaY)
+                contextRef.current.lineTo(x - deltaX(), y - deltaY())
                 break
             case 'Rectangle':
                 const x0 = Math.min(x, startX) - deltaX(),
-                    y0 = Math.min(y, startY) - deltaY,
+                    y0 = Math.min(y, startY) - deltaY(),
                     w = Math.abs(x - startX),
                     h = Math.abs(y - startY)
 
@@ -167,15 +167,26 @@ export const Paint = (): JSX.Element => {
         )
     }
 
+    const handleToolSelect = (e: SelectValue): void => {
+        setSelectedTool(`${e}`)
+    }
+
+    const handleColorSelect = (e: {
+        target: { value: React.SetStateAction<string> }
+    }): void => {
+        setColor(e.target.value)
+    }
+
+    const handleLineWidthSlider = (value: string | number): void => {
+        setlineWidth(+value)
+    }
+
     return (
         <>
             <div id="tools">
                 <Button onClick={clear}>clear</Button>
                 <Button onClick={save}>save</Button>
-                <Select
-                    value={selectedTool}
-                    onChange={(e: SelectValue) => setSelectedTool(`${e}`)}
-                >
+                <Select value={selectedTool} onChange={handleToolSelect}>
                     {TOOLS.map((item, index) => (
                         <Select.Option key={`${index}`} value={item}>
                             {item}
@@ -187,12 +198,9 @@ export const Paint = (): JSX.Element => {
                     type="color"
                     id="color"
                     value={color}
-                    onChange={(e) => setColor(e.target.value)}
+                    onChange={handleColorSelect}
                 />
-                <Slider
-                    value={lineWidth}
-                    onChange={(value: string | number) => setlineWidth(+value)}
-                />
+                <Slider value={lineWidth} onChange={handleLineWidthSlider} />
             </div>
 
             <div id="viewport">

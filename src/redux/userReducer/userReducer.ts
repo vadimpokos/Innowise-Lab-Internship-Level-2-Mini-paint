@@ -1,16 +1,8 @@
-import { GOOGLE_SIGN_IN, LOGOUT } from './reduxTypes'
-import firebase from 'firebase'
-
-export type User = firebase.User
+import { GOOGLE_SIGN_IN, LOGOUT } from '../reduxTypes'
+import { User, State, Action } from './types'
 
 const initialState: { user: User } = {
     user: {} as User,
-}
-
-type State = typeof initialState
-type Action = {
-    type: string
-    payload: User
 }
 
 export const userReducer = (state = initialState, action: Action): State => {

@@ -1,20 +1,5 @@
-import { ADD_DATA, CLEAR_DATA, DELETE_DATA, GET_DATA } from './reduxTypes'
-
-export type image = {
-    id: string
-    base64: string
-    firestoreId: string
-    username: string
-    avatar: string
-    uid: string
-}
-
-type init = { images: image[] }
-
-export type action = {
-    type: string
-    payload: image[]
-}
+import { ADD_DATA, CLEAR_DATA, DELETE_DATA, GET_DATA } from '../reduxTypes'
+import { Iaction, image, init } from './types'
 
 const initialState: init = {
     images: [] as image[],
@@ -22,7 +7,7 @@ const initialState: init = {
 
 type State = typeof initialState
 
-export const imagesReducer = (state = initialState, action: action): State => {
+export const imagesReducer = (state = initialState, action: Iaction): State => {
     switch (action.type) {
         case GET_DATA:
             return { images: action.payload }

@@ -2,20 +2,17 @@ import React from 'react'
 import { Avatar, Card } from 'antd'
 import { DeleteOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteImage } from './redux/actions'
-import { RootState } from './redux/rootReducer'
+import { RootState } from '../redux/rootReducer'
+import { IFeedImage } from './types'
+import { deleteImage } from '../redux/imagesReducer/actions'
 
-export const ImageItem = (item: {
-    id: string
-    base64: string
-    firestoreId: string
-    username: string
-    avatar: string
-    uid: string
-}): JSX.Element => {
+export const ImageItem = (item: IFeedImage): JSX.Element => {
     const dispatch = useDispatch()
 
     const user = useSelector((state: RootState) => state.user.user)
+    const handleButtonDelete = (): void => {
+        dispatch(deleteImage(item))
+    }
 
     return (
         <Card
@@ -25,7 +22,7 @@ export const ImageItem = (item: {
                 user.uid === item.uid ? (
                     <DeleteOutlined
                         key={item.id}
-                        onClick={() => dispatch(deleteImage(item))}
+                        onClick={handleButtonDelete}
                     />
                 ) : null,
             ]}

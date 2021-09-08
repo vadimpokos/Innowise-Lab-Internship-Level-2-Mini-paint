@@ -1,15 +1,15 @@
 import { RootState } from './redux/rootReducer'
-import { User } from './redux/userReducer'
+import { User } from './redux/userReducer/types'
 
 export const loadState = (): RootState => {
     try {
         const serializedState = localStorage.getItem('state')
         if (serializedState === null) {
-            return undefined
+            return { user: { user: {} } } as RootState
         }
         return JSON.parse(serializedState)
     } catch (err) {
-        return undefined
+        return null
     }
 }
 

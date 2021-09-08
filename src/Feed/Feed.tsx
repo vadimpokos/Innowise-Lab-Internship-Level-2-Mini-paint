@@ -2,8 +2,9 @@ import { Select } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ImageItem } from './ImageItem'
-import { getImages, Iimage } from './redux/actions'
-import { RootState } from './redux/rootReducer'
+import { RootState } from '../redux/rootReducer'
+import { IFeedImage } from './types'
+import { getImages } from '../redux/imagesReducer/actions'
 
 export const Feed = (): JSX.Element => {
     const images = useSelector((state: RootState) => state.images.images)
@@ -15,8 +16,12 @@ export const Feed = (): JSX.Element => {
         dispatch(getImages())
     }, [dispatch])
 
+    const handleUserSelect = (e: string): void => {
+        setSelectedUser(`${e}`)
+    }
+
     const users = images.reduce(
-        (acc: string[], item: Iimage) => {
+        (acc: string[], item: IFeedImage) => {
             if (
                 acc.find(
                     (name: string) =>
@@ -39,7 +44,7 @@ export const Feed = (): JSX.Element => {
                 <Select
                     className="users-select"
                     value={selectedUser}
-                    onChange={(e) => setSelectedUser(`${e}`)}
+                    onChange={handleUserSelect}
                 >
                     {users.map((item: string, index: number) => (
                         <Select.Option value={item} key={index}>
@@ -50,20 +55,12 @@ export const Feed = (): JSX.Element => {
             </div>
             <div className="images-wrapper">
                 <h3>{`${selectedUser} images`}</h3>
-                {images.map(
-                    (item: {
-                        id: string
-                        base64: string
-                        firestoreId: string
-                        username: string
-                        avatar: string
-                        uid: string
-                    }) =>
-                        item.username === selectedUser ||
-                        selectedUser === 'All' ||
-                        (selectedUser === 'My' && item.uid === user.uid) ? (
-                            <ImageItem {...item} key={item.id} />
-                        ) : null
+                {images.map((item: IFeedImage) =>
+                    item.username === selectedUser ||
+                    selectedUser === 'All' ||
+                    (selectedUser === 'My' && item.uid === user.uid) ? (
+                        <ImageItem {...item} key={item.id} />
+                    ) : null
                 )}
             </div>
         </>
