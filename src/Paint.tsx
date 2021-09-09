@@ -42,6 +42,8 @@ export const Paint = (): JSX.Element => {
         secondContextRef.current = secondContext
     }, [])
 
+    const sliderPadding = 12
+
     const deltaX = (): number => {
         return (window.innerWidth - canvasRef.current.width) / 2
     }
@@ -50,7 +52,7 @@ export const Paint = (): JSX.Element => {
         return (
             document.getElementById('tools').clientHeight +
             document.getElementById('page-header').clientHeight +
-            14
+            sliderPadding
         )
     }
 
