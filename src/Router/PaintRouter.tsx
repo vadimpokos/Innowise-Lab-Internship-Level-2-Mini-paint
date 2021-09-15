@@ -2,11 +2,11 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import { AppRouter } from './AppRouter'
-import { Auth } from '../auth'
+import { Auth } from '../components/Auth'
 import { RootState } from '../redux/rootReducer'
-import { PATH_ROUTES } from './RoutePaths'
+import { PATH_ROUTES } from '../constants/RoutePaths'
 
-export const PaintRouter = (): JSX.Element => {
+const PaintRouterComponent = (): JSX.Element => {
     const user = useSelector((state: RootState) => state.user.user.uid)
 
     return (
@@ -35,3 +35,5 @@ export const PaintRouter = (): JSX.Element => {
         </Router>
     )
 }
+
+export const PaintRouter = React.memo(PaintRouterComponent)

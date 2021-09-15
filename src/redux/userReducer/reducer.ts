@@ -1,4 +1,4 @@
-import { GOOGLE_SIGN_IN, LOGOUT } from '../reduxTypes'
+import { GOOGLE_SIGN_IN, LOGOUT } from '../../constants/reduxTypes'
 import { User, State, Action } from './types'
 
 const initialState: { user: User } = {

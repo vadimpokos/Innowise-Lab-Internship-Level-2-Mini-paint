@@ -2,11 +2,11 @@ import React from 'react'
 import { Avatar, Card } from 'antd'
 import { DeleteOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../redux/rootReducer'
-import { IFeedImage } from './types'
-import { deleteImage } from '../redux/imagesReducer/actions'
+import { RootState } from '../../../redux/rootReducer'
+import { IFeedImage } from '../types'
+import { deleteImage } from '../../../redux/imagesReducer/actions'
 
-export const ImageItem = (item: IFeedImage): JSX.Element => {
+const ImageItemComponent = (item: IFeedImage): JSX.Element => {
     const dispatch = useDispatch()
 
     const user = useSelector((state: RootState) => state.user.user)
@@ -34,3 +34,5 @@ export const ImageItem = (item: IFeedImage): JSX.Element => {
         </Card>
     )
 }
+
+export const ImageItem = React.memo(ImageItemComponent)

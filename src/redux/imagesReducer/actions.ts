@@ -1,7 +1,12 @@
 import { Dispatch } from 'redux'
 import { db } from '../../firebase/firebase'
-import { openNotification } from '../../notification'
-import { ADD_DATA, CLEAR_DATA, DELETE_DATA, GET_DATA } from '../reduxTypes'
+import { openNotification } from '../../utils/notification'
+import {
+    ADD_DATA,
+    CLEAR_DATA,
+    DELETE_DATA,
+    GET_DATA,
+} from '../../constants/reduxTypes'
 import { IdbImage, Iimage, image } from './types'
 
 export const getImages = (): ((

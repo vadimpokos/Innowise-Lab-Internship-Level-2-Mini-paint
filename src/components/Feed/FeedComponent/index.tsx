@@ -1,12 +1,12 @@
 import { Select } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { ImageItem } from './ImageItem'
-import { RootState } from '../redux/rootReducer'
-import { IFeedImage } from './types'
-import { getImages } from '../redux/imagesReducer/actions'
+import { ImageItem } from '../ImageItem'
+import { RootState } from '../../../redux/rootReducer'
+import { IFeedImage } from '../types'
+import { getImages } from '../../../redux/imagesReducer/actions'
 
-export const Feed = (): JSX.Element => {
+const FeedComponent = (): JSX.Element => {
     const images = useSelector((state: RootState) => state.images.images)
     const user = useSelector((state: RootState) => state.user.user)
     const dispatch = useDispatch()
@@ -66,3 +66,5 @@ export const Feed = (): JSX.Element => {
         </>
     )
 }
+
+export const Feed = React.memo(FeedComponent)

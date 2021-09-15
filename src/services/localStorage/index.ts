@@ -1,5 +1,6 @@
-import { RootState } from './redux/rootReducer'
-import { User } from './redux/userReducer/types'
+import { RootState } from '../../redux/rootReducer'
+import { User } from '../../redux/userReducer/types'
+import { openNotification } from '../../utils/notification'
 
 export const loadState = (): RootState => {
     try {
@@ -18,6 +19,7 @@ export const saveState = (state: { user: { user: User } }): void => {
         const serializedState = JSON.stringify(state)
         localStorage.setItem('state', serializedState)
     } catch (err) {
-        console.log(err)
+        openNotification(err.name, err.message)
     }
+    
 }

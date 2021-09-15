@@ -3,12 +3,12 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Route, useRouteMatch } from 'react-router'
 import { Link } from 'react-router-dom'
-import { Feed } from '../Feed/Feed'
-import { Paint } from '../Paint'
+import { Feed } from '../components/Feed/FeedComponent'
+import { Paint } from '../components/Paint'
 import { logOut } from '../redux/userReducer/actions'
 import { clearImagesList } from '../redux/imagesReducer/actions'
 
-export const AppRouter = (): JSX.Element => {
+const AppRouterComponent = (): JSX.Element => {
     const { path } = useRouteMatch()
     const dispatch = useDispatch()
     const [currentMenuItem, setCurrentMenuItem] = useState('feed')
@@ -43,3 +43,5 @@ export const AppRouter = (): JSX.Element => {
         </>
     )
 }
+
+export const AppRouter = React.memo(AppRouterComponent)

@@ -1,7 +1,7 @@
 import firebase from 'firebase'
-import { GOOGLE_SIGN_IN, LOGOUT } from '../reduxTypes'
+import { GOOGLE_SIGN_IN, LOGOUT } from '../../constants/reduxTypes'
 import { Dispatch } from 'redux'
-import { openNotification } from '../../notification'
+import { openNotification } from '../../utils/notification'
 
 export const googleSignIn = (): ((
     dispatch: Dispatch<{ type: string; payload: firebase.User }>

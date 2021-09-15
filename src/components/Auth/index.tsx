@@ -1,9 +1,9 @@
 import { Button } from 'antd'
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { googleSignIn } from './redux/userReducer/actions'
+import { googleSignIn } from '../../redux/userReducer/actions'
 
-export const Auth = (): JSX.Element => {
+export const AuthComponent = (): JSX.Element => {
     const dispatch = useDispatch()
 
     const handleAuthButton = (): void => {
@@ -19,3 +19,5 @@ export const Auth = (): JSX.Element => {
         </div>
     )
 }
+
+export const Auth = React.memo(AuthComponent)

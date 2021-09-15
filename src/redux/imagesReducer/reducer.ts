@@ -1,4 +1,9 @@
-import { ADD_DATA, CLEAR_DATA, DELETE_DATA, GET_DATA } from '../reduxTypes'
+import {
+    ADD_DATA,
+    CLEAR_DATA,
+    DELETE_DATA,
+    GET_DATA,
+} from '../../constants/reduxTypes'
 import { Iaction, image, init } from './types'
 
 const initialState: init = {
