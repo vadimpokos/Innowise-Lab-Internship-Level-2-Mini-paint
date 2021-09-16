@@ -25,20 +25,24 @@ const CanvasComponent: React.FC<IProps> = ({
 
     useEffect(() => {
         const canvas = canvasRefInner.current
-        canvas.width = viewportRef.current.clientWidth
-        canvas.height = viewportRef.current.clientHeight
-        const context = canvas.getContext('2d')
-        contextRefInner.current = context
-        context.lineCap = 'round'
+        if (canvas) {
+            canvas.width = viewportRef.current?.clientWidth || 0
+            canvas.height = viewportRef.current?.clientHeight || 0
+            const context = canvas.getContext('2d')
+            contextRefInner.current = context
+            context ? (context.lineCap = 'round') : null
+        }
 
         canvasRef ? (canvasRef.current = canvasRefInner.current) : null
         contextRef ? (contextRef.current = contextRefInner.current) : null
 
         const secondCanvas = secondCanvasRefInner.current
-        secondCanvas.width = viewportRef.current.clientWidth
-        secondCanvas.height = viewportRef.current.clientHeight
-        const secondContext = secondCanvas.getContext('2d')
-        secondContextRefInner.current = secondContext
+        if (secondCanvas) {
+            secondCanvas.width = viewportRef.current?.clientWidth || 0
+            secondCanvas.height = viewportRef.current?.clientHeight || 0
+            const secondContext = secondCanvas?.getContext('2d')
+            secondContextRefInner.current = secondContext
+        }
 
         secondCanvasRef
             ? (secondCanvasRef.current = secondCanvasRefInner.current)
@@ -49,25 +53,35 @@ const CanvasComponent: React.FC<IProps> = ({
     }, [canvasRef, contextRef, secondCanvasRef, secondContextRef])
 
     const deltaX = (): number => {
-        return (window.innerWidth - canvasRefInner.current.width) / 2
+        const canvasWidth = canvasRefInner.current
+            ? canvasRefInner.current.width
+            : 0
+        return (window.innerWidth - canvasWidth) / 2
     }
 
     const deltaY = (): number => {
         const sliderPadding = 12
-        return (
-            document.getElementById('tools').clientHeight +
-            document.getElementById('page-header').clientHeight +
-            sliderPadding
-        )
+        const toolsHeight = document.getElementById('tools')
+            ? document.getElementById('tools')?.clientHeight
+            : 0
+        const pageHeaderHeight = document.getElementById('page-header')
+            ? document.getElementById('page-header')?.clientHeight
+            : 0
+
+        return (toolsHeight || 0) + (pageHeaderHeight || 0) + sliderPadding
     }
 
     const updateImg = (): void => {
-        secondContextRefInner.current.drawImage(canvasRefInner.current, 0, 0)
-        contextRefInner.current.clearRect(
+        secondContextRefInner.current?.drawImage(
+            canvasRefInner.current ? canvasRefInner.current : canvasRef.current,
+            0,
+            0
+        )
+        contextRefInner.current?.clearRect(
             0,
             0,
-            canvasRefInner.current.width,
-            canvasRefInner.current.height
+            canvasRefInner.current ? canvasRefInner.current.width : 0,
+            canvasRefInner.current ? canvasRefInner.current.height : 0
         )
     }
 
@@ -75,8 +89,8 @@ const CanvasComponent: React.FC<IProps> = ({
         nativeEvent,
     }: React.MouseEvent<HTMLCanvasElement>): void => {
         const { x, y } = nativeEvent
-        contextRefInner.current.beginPath()
-        contextRefInner.current.moveTo(x - deltaX(), y - deltaY())
+        contextRefInner.current?.beginPath()
+        contextRefInner.current?.moveTo(x - deltaX(), y - deltaY())
 
         setIsDrawing(true)
         setStartX(x)
@@ -84,7 +98,7 @@ const CanvasComponent: React.FC<IProps> = ({
     }
 
     const finishDraw = (): void => {
-        contextRefInner.current.closePath()
+        contextRefInner.current?.closePath()
         updateImg()
         setIsDrawing(false)
     }
@@ -97,23 +111,27 @@ const CanvasComponent: React.FC<IProps> = ({
         }
         const { x, y } = nativeEvent
 
-        contextRefInner.current.lineWidth = lineWidth
-        contextRefInner.current.strokeStyle = color
+        contextRefInner.current
+            ? (contextRefInner.current.lineWidth = lineWidth)
+            : 5
+        contextRefInner.current
+            ? (contextRefInner.current.strokeStyle = color)
+            : 'Black'
 
-        contextRefInner.current.clearRect(
+        contextRefInner.current?.clearRect(
             0,
             0,
-            canvasRefInner.current.width,
-            canvasRefInner.current.height
+            canvasRefInner.current ? canvasRefInner.current.width : 0,
+            canvasRefInner.current ? canvasRefInner.current.height : 0
         )
         switch (selectedTool) {
             case 'Line':
-                contextRefInner.current.beginPath()
-                contextRefInner.current.moveTo(
+                contextRefInner.current?.beginPath()
+                contextRefInner.current?.moveTo(
                     startX - deltaX(),
                     startY - deltaY()
                 )
-                contextRefInner.current.lineTo(x - deltaX(), y - deltaY())
+                contextRefInner.current?.lineTo(x - deltaX(), y - deltaY())
                 break
             case 'Circle':
                 const getRaduis = (): number => {
@@ -122,8 +140,8 @@ const CanvasComponent: React.FC<IProps> = ({
                     )
                 }
 
-                contextRefInner.current.beginPath()
-                contextRefInner.current.arc(
+                contextRefInner.current?.beginPath()
+                contextRefInner.current?.arc(
                     startX - deltaX(),
                     startY - deltaY(),
                     getRaduis(),
@@ -133,7 +151,7 @@ const CanvasComponent: React.FC<IProps> = ({
                 )
                 break
             case 'Pencil':
-                contextRefInner.current.lineTo(x - deltaX(), y - deltaY())
+                contextRefInner.current?.lineTo(x - deltaX(), y - deltaY())
                 break
             case 'Rectangle':
                 const x0 = Math.min(x, startX) - deltaX(),
@@ -141,13 +159,13 @@ const CanvasComponent: React.FC<IProps> = ({
                     w = Math.abs(x - startX),
                     h = Math.abs(y - startY)
 
-                contextRefInner.current.strokeRect(x0, y0, w, h)
+                contextRefInner.current?.strokeRect(x0, y0, w, h)
                 break
             default:
                 break
         }
 
-        contextRefInner.current.stroke()
+        contextRefInner.current?.stroke()
     }
 
     return (

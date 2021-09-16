@@ -2,6 +2,7 @@ import firebase from 'firebase'
 import { GOOGLE_SIGN_IN, LOGOUT } from '../../constants/reduxTypes'
 import { Dispatch } from 'redux'
 import { openNotification } from '../../utils/notification'
+import { User } from './types'
 
 export const googleSignIn = (): ((
     dispatch: Dispatch<{ type: string; payload: firebase.User }>
@@ -16,7 +17,10 @@ export const googleSignIn = (): ((
             .signInWithPopup(provider)
             .then((result) => {
                 const user = result.user
-                dispatch({ type: GOOGLE_SIGN_IN, payload: user })
+                dispatch({
+                    type: GOOGLE_SIGN_IN,
+                    payload: user || ({} as User),
+                })
             })
             .catch((e) => {
                 openNotification(e.name, e.message)

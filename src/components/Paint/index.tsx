@@ -8,6 +8,7 @@ import { addImage, getImages } from '../../redux/imagesReducer/actions'
 import { RootState } from '../../redux/rootReducer'
 import { TOOLS } from '../../constants/tools'
 import { Canvas } from '../Canvas'
+import { openNotification } from '../../utils/notification'
 
 const PaintComponent = (): JSX.Element => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null)
@@ -24,29 +25,33 @@ const PaintComponent = (): JSX.Element => {
     const dispatch = useDispatch()
 
     const save = (): void => {
-        dispatch(
-            addImage(
-                secondCanvasRef.current.toDataURL(),
-                user.uid,
-                user.displayName,
-                user.photoURL
+        if (secondCanvasRef.current) {
+            dispatch(
+                addImage(
+                    secondCanvasRef.current.toDataURL(),
+                    user.uid,
+                    user.displayName,
+                    user.photoURL
+                )
             )
-        )
-        dispatch(getImages())
+            dispatch(getImages())
+        } else {
+            openNotification('Something go wrong', 'Cannot get canvas')
+        }
     }
 
     const clear = (): void => {
-        secondContextRef.current.clearRect(
+        secondContextRef.current?.clearRect(
             0,
             0,
-            canvasRef.current.width,
-            canvasRef.current.height
+            canvasRef.current ? canvasRef.current.width : 0,
+            canvasRef.current ? canvasRef.current.height : 0
         )
-        contextRef.current.clearRect(
+        contextRef.current?.clearRect(
             0,
             0,
-            canvasRef.current.width,
-            canvasRef.current.height
+            canvasRef.current ? canvasRef.current.width : 0,
+            canvasRef.current ? canvasRef.current.height : 0
         )
     }
 

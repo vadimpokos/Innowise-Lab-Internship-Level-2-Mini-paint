@@ -10,7 +10,7 @@ export const loadState = (): RootState => {
         }
         return JSON.parse(serializedState)
     } catch (err) {
-        return null
+        return {} as RootState
     }
 }
 
@@ -21,5 +21,4 @@ export const saveState = (state: { user: { user: User } }): void => {
     } catch (err) {
         openNotification(err.name, err.message)
     }
-    
 }
