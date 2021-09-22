@@ -1,4 +1,4 @@
-export type IFeedImage = {
+export type FeedImage = {
     id: string
     base64: string
     firestoreId: string

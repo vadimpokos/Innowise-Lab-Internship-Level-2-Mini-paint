@@ -4,15 +4,15 @@ import {
     DELETE_DATA,
     GET_DATA,
 } from '../../constants/reduxTypes'
-import { Iaction, image, init } from './types'
+import { Action, Image, Init } from './types'
 
-const initialState: init = {
-    images: [] as image[],
+const initialState: Init = {
+    images: [] as Image[],
 }
 
 type State = typeof initialState
 
-export const imagesReducer = (state = initialState, action: Iaction): State => {
+export const imagesReducer = (state = initialState, action: Action): State => {
     switch (action.type) {
         case GET_DATA:
             return { images: action.payload }

@@ -7,16 +7,16 @@ import {
     DELETE_DATA,
     GET_DATA,
 } from '../../constants/reduxTypes'
-import { IdbImage, Iimage, image } from './types'
+import { IDbImage, IImage, Image } from './types'
 
 export const getImages = (): ((
-    dispatch: Dispatch<{ type: string; payload: IdbImage[] }>
+    dispatch: Dispatch<{ type: string; payload: IDbImage[] }>
 ) => Promise<void>) => {
     return async (
-        dispatch: Dispatch<{ type: string; payload: IdbImage[] }>
+        dispatch: Dispatch<{ type: string; payload: IDbImage[] }>
     ): Promise<void> => {
         const response = db.collection('images').orderBy('id')
-        let images: IdbImage[] = []
+        let images: IDbImage[] = []
         try {
             await response
                 .get()
@@ -35,7 +35,14 @@ export const getImages = (): ((
                     throw e
                 })
         } catch (e) {
-            openNotification(e.name, e.message)
+            if (e instanceof Error) {
+                openNotification({ message: e.name, description: e.message })
+            } else {
+                openNotification({
+                    message: 'error',
+                    description: 'unknown error',
+                })
+            }
         }
     }
 }
@@ -46,10 +53,10 @@ export const addImage = (
     username: string,
     avatar: string
 ): ((
-    dispatch: Dispatch<{ type: string; payload: Iimage }>
+    dispatch: Dispatch<{ type: string; payload: IImage }>
 ) => Promise<void>) => {
     return async (
-        dispatch: Dispatch<{ type: string; payload: Iimage }>
+        dispatch: Dispatch<{ type: string; payload: IImage }>
     ): Promise<void> => {
         const response = db.collection('images')
         const imageForDB = {
@@ -72,18 +79,25 @@ export const addImage = (
                     throw error
                 })
         } catch (e) {
-            openNotification(e.name, e.message)
+            if (e instanceof Error) {
+                openNotification({ message: e.name, description: e.message })
+            } else {
+                openNotification({
+                    message: 'error',
+                    description: 'unknown error',
+                })
+            }
         }
     }
 }
 
 export const deleteImage = (
-    img: image
+    img: Image
 ): ((
-    dispatch: Dispatch<{ type: string; payload: image[] }>
+    dispatch: Dispatch<{ type: string; payload: Image[] }>
 ) => Promise<void>) => {
     return async (
-        dispatch: Dispatch<{ type: string; payload: image[] }>
+        dispatch: Dispatch<{ type: string; payload: Image[] }>
     ): Promise<void> => {
         const response = db.collection('images')
         try {
@@ -97,7 +111,14 @@ export const deleteImage = (
                     throw error
                 })
         } catch (e) {
-            openNotification(e.name, e.message)
+            if (e instanceof Error) {
+                openNotification({ message: e.name, description: e.message })
+            } else {
+                openNotification({
+                    message: 'error',
+                    description: 'unknown error',
+                })
+            }
         }
     }
 }

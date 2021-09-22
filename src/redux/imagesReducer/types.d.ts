@@ -1,4 +1,4 @@
-export interface Iimage {
+export interface IImage {
     avatar?: string
     base64?: string
     id?: string
@@ -6,11 +6,11 @@ export interface Iimage {
     username?: string
 }
 
-export interface IdbImage extends Iimage {
+export interface IDbImage extends IImage {
     firestoreId: string
 }
 
-export type image = {
+export type Image = {
     id: string
     base64: string
     firestoreId: string
@@ -19,9 +19,9 @@ export type image = {
     uid: string
 }
 
-export type init = { images: image[] }
+export type Init = { images: Image[] }
 
-export type Iaction = {
+export type Action = {
     type: string
     payload: image[]
 }

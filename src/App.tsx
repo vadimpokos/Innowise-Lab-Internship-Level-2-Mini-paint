@@ -1,10 +1,23 @@
 import React from 'react'
-import './App.css'
 import 'antd/dist/antd.css'
-import { PaintRouter } from './Router/PaintRouter'
+import { PaintRouter } from './router/PaintRouter'
+import { useDeviceType } from './Hooks/useDeviceType'
+import { useEffect } from 'react'
+import { WithHOC } from './HOC'
 
-function App(): JSX.Element {
-    return <PaintRouter />
+interface IApp {
+    isUsingHOC?: boolean
 }
 
-export default App
+function AppComponent({ isUsingHOC }: IApp): JSX.Element {
+    const device = useDeviceType()
+    useEffect(() => console.log(device, isUsingHOC))
+
+    return (
+        <>
+            <PaintRouter />
+        </>
+    )
+}
+
+export const App = WithHOC(AppComponent)

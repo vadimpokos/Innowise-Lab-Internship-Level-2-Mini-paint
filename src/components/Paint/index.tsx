@@ -36,7 +36,10 @@ const PaintComponent = (): JSX.Element => {
             )
             dispatch(getImages())
         } else {
-            openNotification('Something go wrong', 'Cannot get canvas')
+            openNotification({
+                message: 'Something go wrong',
+                description: 'Cannot get canvas',
+            })
         }
     }
 

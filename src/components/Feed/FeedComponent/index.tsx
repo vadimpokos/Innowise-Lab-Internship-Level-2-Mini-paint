@@ -3,8 +3,9 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ImageItem } from '../ImageItem'
 import { RootState } from '../../../redux/rootReducer'
-import { IFeedImage } from '../types'
+import { FeedImage } from '../types'
 import { getImages } from '../../../redux/imagesReducer/actions'
+import './styles.css'
 
 const FeedComponent = (): JSX.Element => {
     const images = useSelector((state: RootState) => state.images.images)
@@ -21,7 +22,7 @@ const FeedComponent = (): JSX.Element => {
     }
 
     const users = images.reduce(
-        (acc: string[], item: IFeedImage) => {
+        (acc: string[], item: FeedImage) => {
             if (
                 acc.find(
                     (name: string) =>
@@ -55,7 +56,7 @@ const FeedComponent = (): JSX.Element => {
             </div>
             <div className="images-wrapper">
                 <h3>{`${selectedUser} images`}</h3>
-                {images.map((item: IFeedImage) =>
+                {images.map((item: FeedImage) =>
                     item.username === selectedUser ||
                     selectedUser === 'All' ||
                     (selectedUser === 'My' && item.uid === user.uid) ? (

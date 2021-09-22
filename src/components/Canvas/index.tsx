@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useRef } from 'react'
 import { useEffect } from 'react'
 import { IProps } from './types'
+import './styles.css'
 
 const CanvasComponent: React.FC<IProps> = ({
     canvasRef,

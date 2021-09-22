@@ -1,22 +1,17 @@
 import { rootReducer } from './rootReducer'
 import { applyMiddleware, compose, createStore } from 'redux'
 import thunk from 'redux-thunk'
-import { loadState, saveState } from '../services/localStorage'
+import { loadState, saveState } from '../services/LocalStorage'
+import { customMiddleware } from './customMiddleware/customMiddleware'
 
 const persistedState = loadState()
-
-declare global {
-    interface Window {
-        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose
-    }
-}
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 export const store = createStore(
     rootReducer,
     persistedState,
-    composeEnhancers(applyMiddleware(thunk))
+    composeEnhancers(applyMiddleware(thunk, customMiddleware))
 )
 
 store.subscribe(() => {
@@ -24,5 +19,3 @@ store.subscribe(() => {
         user: store.getState().user,
     })
 })
-
-export type AppDispatch = typeof store.dispatch

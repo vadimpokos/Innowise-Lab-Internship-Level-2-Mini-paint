@@ -4,7 +4,7 @@ import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import { AppRouter } from './AppRouter'
 import { Auth } from '../components/Auth'
 import { RootState } from '../redux/rootReducer'
-import { PATH_ROUTES } from '../constants/RoutePaths'
+import { PATH_ROUTES } from '../constants/routePaths'
 
 const PaintRouterComponent = (): JSX.Element => {
     const user = useSelector((state: RootState) => state.user.user.uid)

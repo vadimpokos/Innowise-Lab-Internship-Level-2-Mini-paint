@@ -18,7 +18,11 @@ export const saveState = (state: { user: { user: User } }): void => {
     try {
         const serializedState = JSON.stringify(state)
         localStorage.setItem('state', serializedState)
-    } catch (err) {
-        openNotification(err.name, err.message)
+    } catch (e) {
+        if (e instanceof Error) {
+            openNotification({ message: e.name, description: e.message })
+        } else {
+            openNotification({ message: 'error', description: 'unknown error' })
+        }
     }
 }

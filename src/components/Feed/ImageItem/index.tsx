@@ -3,10 +3,10 @@ import { Avatar, Card } from 'antd'
 import { DeleteOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../../redux/rootReducer'
-import { IFeedImage } from '../types'
+import { FeedImage } from '../types'
 import { deleteImage } from '../../../redux/imagesReducer/actions'
 
-const ImageItemComponent = (item: IFeedImage): JSX.Element => {
+const ImageItemComponent = (item: FeedImage): JSX.Element => {
     const dispatch = useDispatch()
 
     const user = useSelector((state: RootState) => state.user.user)

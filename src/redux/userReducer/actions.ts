@@ -11,20 +11,30 @@ export const googleSignIn = (): ((
         dispatch: Dispatch<{ type: string; payload: firebase.User }>
     ): Promise<void> => {
         const provider = new firebase.auth.GoogleAuthProvider()
-
-        await firebase
-            .auth()
-            .signInWithPopup(provider)
-            .then((result) => {
-                const user = result.user
-                dispatch({
-                    type: GOOGLE_SIGN_IN,
-                    payload: user || ({} as User),
+        try {
+            await firebase
+                .auth()
+                .signInWithPopup(provider)
+                .then((result) => {
+                    const user = result.user
+                    dispatch({
+                        type: GOOGLE_SIGN_IN,
+                        payload: user || ({} as User),
+                    })
                 })
-            })
-            .catch((e) => {
-                openNotification(e.name, e.message)
-            })
+                .catch((e) => {
+                    throw e
+                })
+        } catch (e) {
+            if (e instanceof Error) {
+                openNotification({ message: e.name, description: e.message })
+            } else {
+                openNotification({
+                    message: 'error',
+                    description: 'unknown error',
+                })
+            }
+        }
     }
 }
 
@@ -45,7 +55,14 @@ export const logOut = (): ((
                     throw error
                 })
         } catch (e) {
-            openNotification(e.name, e.message)
+            if (e instanceof Error) {
+                openNotification({ message: e.name, description: e.message })
+            } else {
+                openNotification({
+                    message: 'error',
+                    description: 'unknown error',
+                })
+            }
         }
     }
 }
