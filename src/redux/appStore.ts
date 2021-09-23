@@ -1,7 +1,7 @@
 import { rootReducer } from './rootReducer'
 import { applyMiddleware, compose, createStore } from 'redux'
 import thunk from 'redux-thunk'
-import { loadState, saveState } from '../services/localStorage'
+import { loadState, saveState } from '../services/LocalStorage'
 import { customMiddleware } from './customMiddleware/customMiddleware'
 
 const persistedState = loadState()
