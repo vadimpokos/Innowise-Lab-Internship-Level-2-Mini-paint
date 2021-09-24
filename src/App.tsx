@@ -1,9 +1,9 @@
 import React from 'react'
 import 'antd/dist/antd.css'
 import { PaintRouter } from './router/PaintRouter'
-import { useDeviceType } from './Hooks/useDeviceType'
+import { useDeviceType } from './hooks/useDeviceType'
 import { useEffect } from 'react'
-import { WithHOC } from './HOC'
+import { WithHOC } from './components/Hoc'
 
 interface IApp {
     isUsingHOC?: boolean
