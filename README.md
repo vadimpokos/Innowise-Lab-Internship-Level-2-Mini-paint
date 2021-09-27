@@ -1,10 +1,21 @@
-# Getting Started with Create React App
+# Innowise Lab Internship Level 2 Mini Paint
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## [demo](https://vadimpokos.github.io/Innowise-Lab-Internship-Level-2-Mini-paint/)
 
-## Available Scripts
+## How to run the app
 
-In the project directory, you can run:
+1. Clone this repo
+
+```
+    $git clone https://github.com/vadimpokos/Innowise-Lab-Internship-Level-2-Mini-paint.git
+```
+
+2. Open the directory in code editor
+3. Run `$ npm install`
+4. Set up .env file with Firebase config
+5. Run app with `$ npm start`
+
+## npm scripts
 
 ### `npm start`
 
@@ -14,11 +25,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
 ### `npm run build`
 
 Builds the app for production to the `build` folder.\
@@ -27,20 +33,51 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+### `npm run lint:fix`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Fixes ESlint errors
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Folders structure
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```
+└───src
+    │   App.css                                    # Styles
+    │   App.tsx                                    # App component
+    │   auth.tsx                                   # Auth page componen
+    │   Feed.tsx                                   # Component with users images
+    │   ImageItem.tsx                              # Users image component
+    │   index.css
+    │   index.tsx
+    │   localStorage.ts                            # Local storage
+    │   notification.ts                            # Notification toast form antd
+    │   Paint.tsx                                  # Paint component where user can create an image
+    │   react-app-env.d.ts
+    │
+    ├───firebase
+    │       firebase.ts                            # Firebase config
+    │
+    ├───redux
+    │       actions.ts                             # Action creators
+    │       imagesReducer.ts                       # Reducer for images
+    │       reduxTypes.ts                          # Action types
+    │       rootReducer.ts                         # Root reducer
+    │       store.ts                               # Redux store
+    │       userReducer.ts                         # Reducer for user data
+    │
+    └───Router                                     # Routing
+            AppRouter.tsx
+            PaintRouter.tsx
+            RoutePaths.ts
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Firebase Structure
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+└──images                 # collection 'images'
+    ├──avatar             # users photoUrl from Google account (string)
+    ├──base64             # image in base 64 forrmat (string)
+    ├──id                 # id of an image
+    ├──uid                # uid of user who created the current image
+    ├──username           # users name from Google account
+```

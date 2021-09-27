@@ -2,6 +2,7 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
+  "homepage": " https://vadimpokos.github.io/Innowise-Lab-Internship-Level-2-Mini-paint/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
@@ -9,18 +10,25 @@
     "@types/jest": "^26.0.24",
     "@types/node": "^12.20.19",
     "@types/react-dom": "^17.0.9",
+    "antd": "^4.16.13",
+    "env-cmd": "^10.1.0",
+    "firebase": "^8.10.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-redux": "^7.2.4",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "redux": "^4.1.1",
+    "redux-thunk": "^2.3.0",
     "typescript": "^4.3.5",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
     "lint:fix": "eslint './src/**/*.{ts,tsx}'",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "env-cmd -f .env.firebase react-scripts start",
+    "build": "env-cmd -f .env.firebase react-scripts build",
+    "predeploy": "env-cmd -f .env.firebase npm run build",
+    "deploy": "env-cmd -f .env.firebase gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -42,11 +50,13 @@
   },
   "devDependencies": {
     "@types/react": "^17.0.19",
+    "@types/react-router-dom": "^5.1.8",
     "@typescript-eslint/eslint-plugin": "^4.29.2",
     "@typescript-eslint/parser": "^4.29.2",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-react": "^1.1.7",
     "eslint-plugin-prettier": "^3.4.1",
+    "gh-pages": "^3.2.3",
     "husky": "^4.3.8",
     "lint-staged": "^11.1.2",
     "prettier": "^2.3.2"
