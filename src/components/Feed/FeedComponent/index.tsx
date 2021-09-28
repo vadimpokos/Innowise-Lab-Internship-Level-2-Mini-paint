@@ -5,7 +5,8 @@ import { ImageItem } from '../ImageItem'
 import { RootState } from '../../../redux/rootReducer'
 import { FeedImage } from '../types'
 import { getImages } from '../../../redux/imagesReducer/actions'
-import './styles.css'
+import * as S from './styles'
+import { SelectValue } from 'antd/lib/select'
 
 const FeedComponent = (): JSX.Element => {
     const images = useSelector((state: RootState) => state.images.images)
@@ -17,7 +18,7 @@ const FeedComponent = (): JSX.Element => {
         dispatch(getImages())
     }, [dispatch])
 
-    const handleUserSelect = (e: string): void => {
+    const handleUserSelect = (e: SelectValue): void => {
         setSelectedUser(`${e}`)
     }
 
@@ -42,7 +43,7 @@ const FeedComponent = (): JSX.Element => {
         <>
             <div>
                 <span>Sort by user </span>
-                <Select
+                <S.UsersSelect
                     className="users-select"
                     value={selectedUser}
                     onChange={handleUserSelect}
@@ -52,9 +53,9 @@ const FeedComponent = (): JSX.Element => {
                             {item}
                         </Select.Option>
                     ))}
-                </Select>
+                </S.UsersSelect>
             </div>
-            <div className="images-wrapper">
+            <S.ImagesWrapper>
                 <h3>{`${selectedUser} images`}</h3>
                 {images.map((item: FeedImage) =>
                     item.username === selectedUser ||
@@ -63,7 +64,7 @@ const FeedComponent = (): JSX.Element => {
                         <ImageItem {...item} key={item.id} />
                     ) : null
                 )}
-            </div>
+            </S.ImagesWrapper>
         </>
     )
 }

@@ -7,3 +7,7 @@ export interface IProps {
     lineWidth: number
     color: string
 }
+
+export interface ICanvas {
+    zIndex: number
+}

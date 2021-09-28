@@ -2,7 +2,7 @@ import { Button } from 'antd'
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { googleSignIn } from '../../redux/userReducer/actions'
-import './styles.css'
+import * as S from './styles'
 
 export const AuthComponent = (): JSX.Element => {
     const dispatch = useDispatch()
@@ -12,12 +12,12 @@ export const AuthComponent = (): JSX.Element => {
     }
 
     return (
-        <div className="auth-wrapper">
-            <div className="auth-container">
+        <S.Wrapper>
+            <S.Container>
                 <h1>Sign In with Google</h1>
                 <Button onClick={handleAuthButton}>Auth</Button>
-            </div>
-        </div>
+            </S.Container>
+        </S.Wrapper>
     )
 }
 
