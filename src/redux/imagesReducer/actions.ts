@@ -18,22 +18,16 @@ export const getImages = (): ((
         const response = db.collection('images').orderBy('id')
         let images: IDbImage[] = []
         try {
-            await response
-                .get()
-                .then((querySnapshot) => {
-                    querySnapshot.forEach((doc) => {
-                        images = [
-                            { ...doc.data(), firestoreId: doc.id },
-                            ...images,
-                        ]
-                    })
-                })
-                .then(() => {
-                    dispatch({ type: GET_DATA, payload: images })
-                })
-                .catch((e) => {
-                    throw e
-                })
+            const query = await response.get()
+
+            query.forEach((doc) => {
+                images = [
+                    { ...doc.data(), firestoreId: doc.id },
+                    ...images,
+                ]
+            })
+            dispatch({ type: GET_DATA, payload: images })
+
         } catch (e) {
             if (e instanceof Error) {
                 openNotification({ message: e.name, description: e.message })
@@ -67,17 +61,10 @@ export const addImage = (
             avatar: avatar,
         }
         try {
-            await response
-                .add(imageForDB)
-                .then(() => {
-                    dispatch({
-                        type: ADD_DATA,
-                        payload: { ...imageForDB },
-                    })
-                })
-                .catch((error) => {
-                    throw error
-                })
+            await response.add(imageForDB)
+
+            dispatch({type: ADD_DATA, payload: { ...imageForDB }})
+
         } catch (e) {
             if (e instanceof Error) {
                 openNotification({ message: e.name, description: e.message })
@@ -101,15 +88,8 @@ export const deleteImage = (
     ): Promise<void> => {
         const response = db.collection('images')
         try {
-            await response
-                .doc(img.firestoreId)
-                .delete()
-                .then(() => {
-                    dispatch({ type: DELETE_DATA, payload: [img] })
-                })
-                .catch((error) => {
-                    throw error
-                })
+            await response.doc(img.firestoreId).delete()
+            dispatch({ type: DELETE_DATA, payload: [img] })
         } catch (e) {
             if (e instanceof Error) {
                 openNotification({ message: e.name, description: e.message })
