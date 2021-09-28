@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useRef } from 'react'
 import { useEffect } from 'react'
 import { IProps } from './types'
-import './styles.css'
+import * as S from './styles'
 
 const CanvasComponent: React.FC<IProps> = ({
     canvasRef,
@@ -170,16 +170,15 @@ const CanvasComponent: React.FC<IProps> = ({
     }
 
     return (
-        <div id="viewport" ref={viewportRef}>
-            <canvas
-                id="canvas"
+        <S.ViewPort ref={viewportRef}>
+            <S.Canvas zIndex={2}
                 onMouseUp={finishDraw}
                 onMouseDown={startDraw}
                 onMouseMove={draw}
                 ref={canvasRefInner}
             />
-            <canvas id="temp_canvas" ref={secondCanvasRefInner} />
-        </div>
+            <S.Canvas zIndex={1} ref={secondCanvasRefInner} />
+        </S.ViewPort>
     )
 }
 
