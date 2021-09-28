@@ -9,8 +9,8 @@ export const ViewPort = styled.div`
 `
 
 
-export const Canvas = styled.canvas`
+export const Canvas = styled.canvas<ICanvas>`
     position: absolute;
     background-color: transparent;
-    z-index: ${(props: ICanvas) => props.zIndex}
+    z-index: ${(props) => props.zIndex}
 `

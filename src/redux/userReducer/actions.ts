@@ -12,19 +12,11 @@ export const googleSignIn = (): ((
     ): Promise<void> => {
         const provider = new firebase.auth.GoogleAuthProvider()
         try {
-            await firebase
+            const result = await firebase
                 .auth()
                 .signInWithPopup(provider)
-                .then((result) => {
-                    const user = result.user
-                    dispatch({
-                        type: GOOGLE_SIGN_IN,
-                        payload: user || ({} as User),
-                    })
-                })
-                .catch((e) => {
-                    throw e
-                })
+                const user = result.user
+                dispatch({type: GOOGLE_SIGN_IN, payload: user || ({} as User)})
         } catch (e) {
             if (e instanceof Error) {
                 openNotification({ message: e.name, description: e.message })
@@ -48,12 +40,7 @@ export const logOut = (): ((
             await firebase
                 .auth()
                 .signOut()
-                .then(() => {
-                    dispatch({ type: LOGOUT, payload: {} })
-                })
-                .catch((error) => {
-                    throw error
-                })
+                dispatch({ type: LOGOUT, payload: {} })
         } catch (e) {
             if (e instanceof Error) {
                 openNotification({ message: e.name, description: e.message })
