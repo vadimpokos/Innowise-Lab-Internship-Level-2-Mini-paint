@@ -4,14 +4,14 @@ import { DeleteOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../../redux/rootReducer'
 import { FeedImage } from '../types'
-import { deleteImage } from '../../../redux/imagesReducer/actions'
+import { deleteImage } from '../../../reduxToolkit/actions/imageActions'
 
 const ImageItemComponent = (item: FeedImage): JSX.Element => {
     const dispatch = useDispatch()
 
     const user = useSelector((state: RootState) => state.user.user)
     const handleButtonDelete = (): void => {
-        dispatch(deleteImage(item))
+        dispatch(deleteImage([item]))
     }
 
     return (

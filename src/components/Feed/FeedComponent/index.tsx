@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ImageItem } from '../ImageItem'
 import { RootState } from '../../../redux/rootReducer'
 import { FeedImage } from '../types'
-import { getImages } from '../../../redux/imagesReducer/actions'
 import * as S from './styles'
 import { SelectValue } from 'antd/lib/select'
+import { getImages } from '../../../reduxToolkit/actions/imageActions'
 
 const FeedComponent = (): JSX.Element => {
     const images = useSelector((state: RootState) => state.images.images)

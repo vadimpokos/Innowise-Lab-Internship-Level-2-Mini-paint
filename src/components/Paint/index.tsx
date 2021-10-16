@@ -4,11 +4,11 @@ import React from 'react'
 import { useState } from 'react'
 import { useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addImage, getImages } from '../../redux/imagesReducer/actions'
 import { RootState } from '../../redux/rootReducer'
 import { TOOLS } from '../../constants/tools'
 import { Canvas } from '../Canvas'
 import { openNotification } from '../../utils/notification'
+import { addImage, getImages } from '../../reduxToolkit/actions/imageActions'
 
 const PaintComponent = (): JSX.Element => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null)
@@ -28,10 +28,10 @@ const PaintComponent = (): JSX.Element => {
         if (secondCanvasRef.current) {
             dispatch(
                 addImage(
-                    secondCanvasRef.current.toDataURL(),
-                    user.uid,
-                    user.displayName,
-                    user.photoURL
+                    {base64: secondCanvasRef.current.toDataURL(),
+                    uid: user.uid,
+                    username: user.displayName,
+                    avatar: user.photoURL}
                 )
             )
             dispatch(getImages())

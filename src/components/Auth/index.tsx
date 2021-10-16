@@ -1,7 +1,7 @@
 import { Button } from 'antd'
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { googleSignIn } from '../../redux/userReducer/actions'
+import { googleSignIn } from '../../reduxToolkit/actions/userActions'
 import * as S from './styles'
 
 export const AuthComponent = (): JSX.Element => {

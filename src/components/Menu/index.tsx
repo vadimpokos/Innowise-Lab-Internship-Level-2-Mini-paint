@@ -2,8 +2,8 @@ import { Button, Menu } from 'antd'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useRouteMatch } from 'react-router-dom'
-import { clearImagesList } from '../../redux/imagesReducer/actions'
-import { logOut } from '../../redux/userReducer/actions'
+import { clearImagesList } from '../../reduxToolkit/actions/imageActions'
+import { logOut } from '../../reduxToolkit/actions/userActions'
 
 const HeaderMenuComponent = (): JSX.Element => {
     const { path } = useRouteMatch()
